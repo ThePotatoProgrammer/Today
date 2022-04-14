@@ -16,6 +16,7 @@
 		039D6AF12808C7E5002F174C /* TodayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D6AF02808C7E5002F174C /* TodayTests.swift */; };
 		039D6AFB2808C7E5002F174C /* TodayUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D6AFA2808C7E5002F174C /* TodayUITests.swift */; };
 		039D6AFD2808C7E5002F174C /* TodayUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D6AFC2808C7E5002F174C /* TodayUITestsLaunchTests.swift */; };
+		039D6B0B2808C918002F174C /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D6B0A2808C918002F174C /* Reminder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		039D6AF62808C7E5002F174C /* TodayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TodayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		039D6AFA2808C7E5002F174C /* TodayUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayUITests.swift; sourceTree = "<group>"; };
 		039D6AFC2808C7E5002F174C /* TodayUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		039D6B0A2808C918002F174C /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 		039D6AD82808C7E2002F174C /* Today */ = {
 			isa = PBXGroup;
 			children = (
+				039D6B092808C8F9002F174C /* Models */,
 				039D6AD92808C7E2002F174C /* AppDelegate.swift */,
 				039D6ADB2808C7E2002F174C /* SceneDelegate.swift */,
 				039D6ADD2808C7E2002F174C /* ViewController.swift */,
@@ -125,6 +128,14 @@
 				039D6AFC2808C7E5002F174C /* TodayUITestsLaunchTests.swift */,
 			);
 			path = TodayUITests;
+			sourceTree = "<group>";
+		};
+		039D6B092808C8F9002F174C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				039D6B0A2808C918002F174C /* Reminder.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,6 +272,7 @@
 				039D6ADE2808C7E2002F174C /* ViewController.swift in Sources */,
 				039D6ADA2808C7E2002F174C /* AppDelegate.swift in Sources */,
 				039D6ADC2808C7E2002F174C /* SceneDelegate.swift in Sources */,
+				039D6B0B2808C918002F174C /* Reminder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
