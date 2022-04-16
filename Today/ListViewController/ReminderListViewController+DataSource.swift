@@ -8,14 +8,14 @@
 import UIKit
 
 extension ReminderListViewController {
-    typealias Datasource = UICollectionViewDiffableDataSource<Int, String>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, String>
+    typealias Datasource = UICollectionViewDiffableDataSource<Int, Reminder.ID>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, Reminder.ID>
     
     func cellRegistrationHandler(cell: UICollectionViewListCell,
                                  indexPath: IndexPath,
-                                 id: String) {
+                                 id: Reminder.ID) {
         
-        let reminder = Reminder.sampleData[indexPath.item]
+        let reminder = reminder(for: id)
         var contentConfiguration = cell.defaultContentConfiguration()
         contentConfiguration.text = reminder.title
         contentConfiguration.secondaryText = reminder.dueDate.dayAndTimeText
@@ -23,7 +23,7 @@ extension ReminderListViewController {
         cell.contentConfiguration = contentConfiguration
         
         var doneButtonConfiguration = doneButtonConfiguration(for: reminder)
-        doneButtonConfiguration.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.37, alpha: 0.13)
+        doneButtonConfiguration.tintColor = UIColor(red: 1.0, green: 0.9, blue: 0.2, alpha: 1.0)
         
         cell.accessories = [
             .customView(configuration: doneButtonConfiguration),
@@ -31,7 +31,7 @@ extension ReminderListViewController {
         ]
         
         var backgroundConfiguration = UIBackgroundConfiguration.listGroupedCell()
-        backgroundConfiguration.backgroundColor = UIColor(red: 0.0, green: 0.37, blue: 0.0, alpha: 0.13)
+        backgroundConfiguration.backgroundColor = UIColor.darkGray
         cell.backgroundConfiguration = backgroundConfiguration
     }
     
@@ -48,5 +48,15 @@ extension ReminderListViewController {
         button.setImage(image, for: .normal)
         
         return UICellAccessory.CustomViewConfiguration(customView: button, placement: .leading(displayed: .always))
+    }
+    
+    func reminder(for id: Reminder.ID) -> Reminder {
+        let index = reminders.indexOfReminder(with: id)
+        return reminders[index]
+    }
+    
+    func update(_ reminder: Reminder, with id: Reminder.ID) {
+        let index = reminders.indexOfReminder(with: id)
+        reminders[index] = reminder
     }
 }
