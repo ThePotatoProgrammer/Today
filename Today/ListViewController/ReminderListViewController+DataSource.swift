@@ -40,7 +40,7 @@ extension ReminderListViewController {
         let symbolName = (reminder.isComplete)
             ? "circle.fill"
             : "circle"
-        
+            
         let symbolConfiguration = UIImage.SymbolConfiguration(textStyle: .title1)
         let image = UIImage(systemName: symbolName, withConfiguration: symbolConfiguration)
         
@@ -58,5 +58,11 @@ extension ReminderListViewController {
     func update(_ reminder: Reminder, with id: Reminder.ID) {
         let index = reminders.indexOfReminder(with: id)
         reminders[index] = reminder
+    }
+    
+    func completeReminder(with id: Reminder.ID) {
+        var reminder = reminder(for: id)
+        reminder.isComplete.toggle()
+        update(reminder, with: id)
     }
 }
