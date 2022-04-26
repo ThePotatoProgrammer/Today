@@ -74,6 +74,12 @@ class ReminderViewController: UICollectionViewController {
                 cell.contentConfiguration = headerConfiguratoin(for: cell, with: title)
             case (.view, _):
                 cell.contentConfiguration = defaultConfiguration(for: cell, at: row)
+            case (.title, .editText(let title)):
+                cell.contentConfiguration = titleConfiguration(for: cell, with: title)
+            case (.date, .editDate(let date)):
+                cell.contentConfiguration = dateConfiguration(for: cell, with: date)
+            case (.notes, .editText(let notes)):
+                cell.contentConfiguration = notesConfiguration(for: cell, with: notes)
             default:
                 fatalError("Unexpected combination of section and row.")
         }
@@ -106,9 +112,20 @@ class ReminderViewController: UICollectionViewController {
             .notes
         ])
         
-        snapshot.appendItems([.header(Section.title.name)], toSection: .title)
-        snapshot.appendItems([.header(Section.date.name)], toSection: .date)
-        snapshot.appendItems([.header(Section.notes.name)], toSection: .notes)
+        snapshot.appendItems([
+            .header(Section.title.name),
+            .editText(reminder.title)
+        ], toSection: .title)
+        
+        snapshot.appendItems([
+            .header(Section.date.name),
+            .editDate(reminder.dueDate)
+        ], toSection: .date)
+        
+        snapshot.appendItems([
+            .header(Section.notes.name),
+            .editText(reminder.notes)
+        ], toSection: .notes)
         
         dataSource.apply(snapshot)
     }

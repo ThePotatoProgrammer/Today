@@ -27,6 +27,9 @@
 		03A5DF3A2815D41A007A078E /* ReminderViewController+CellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A5DF392815D41A007A078E /* ReminderViewController+CellConfiguration.swift */; };
 		03A5DF3D2815D70C007A078E /* UIView+PinnedSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A5DF3C2815D70C007A078E /* UIView+PinnedSubview.swift */; };
 		03A5DF3F2815DBB1007A078E /* TextFieldContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A5DF3E2815DBB1007A078E /* TextFieldContentView.swift */; };
+		03A5DF412817BBE6007A078E /* UIContentConfiguration+Stateless.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A5DF402817BBE6007A078E /* UIContentConfiguration+Stateless.swift */; };
+		03A5DF432817C207007A078E /* TextViewContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A5DF422817C207007A078E /* TextViewContentView.swift */; };
+		03A5DF452817C3CF007A078E /* DatePickerContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A5DF442817C3CF007A078E /* DatePickerContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +74,9 @@
 		03A5DF392815D41A007A078E /* ReminderViewController+CellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderViewController+CellConfiguration.swift"; sourceTree = "<group>"; };
 		03A5DF3C2815D70C007A078E /* UIView+PinnedSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+PinnedSubview.swift"; sourceTree = "<group>"; };
 		03A5DF3E2815DBB1007A078E /* TextFieldContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldContentView.swift; sourceTree = "<group>"; };
+		03A5DF402817BBE6007A078E /* UIContentConfiguration+Stateless.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContentConfiguration+Stateless.swift"; sourceTree = "<group>"; };
+		03A5DF422817C207007A078E /* TextViewContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewContentView.swift; sourceTree = "<group>"; };
+		03A5DF442817C3CF007A078E /* DatePickerContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +202,9 @@
 			children = (
 				03A5DF3C2815D70C007A078E /* UIView+PinnedSubview.swift */,
 				03A5DF3E2815DBB1007A078E /* TextFieldContentView.swift */,
+				03A5DF402817BBE6007A078E /* UIContentConfiguration+Stateless.swift */,
+				03A5DF422817C207007A078E /* TextViewContentView.swift */,
+				03A5DF442817C3CF007A078E /* DatePickerContentView.swift */,
 			);
 			path = ContentViews;
 			sourceTree = "<group>";
@@ -332,14 +341,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				03A5DF382815C9C8007A078E /* ReminderViewController+Sections.swift in Sources */,
+				03A5DF452817C3CF007A078E /* DatePickerContentView.swift in Sources */,
 				03593DF3281258FB0069A20B /* ReminderListViewController+Actions.swift in Sources */,
 				039D6ADE2808C7E2002F174C /* ReminderListViewController.swift in Sources */,
 				039D6B0D280A1D3F002F174C /* Date+Today.swift in Sources */,
 				039D6ADA2808C7E2002F174C /* AppDelegate.swift in Sources */,
+				03A5DF412817BBE6007A078E /* UIContentConfiguration+Stateless.swift in Sources */,
 				03A5DF3A2815D41A007A078E /* ReminderViewController+CellConfiguration.swift in Sources */,
 				039D6ADC2808C7E2002F174C /* SceneDelegate.swift in Sources */,
 				03593DF52813AD060069A20B /* ReminderViewController.swift in Sources */,
 				03A5DF3D2815D70C007A078E /* UIView+PinnedSubview.swift in Sources */,
+				03A5DF432817C207007A078E /* TextViewContentView.swift in Sources */,
 				03593DF92813B5EE0069A20B /* ReminderViewController+Row.swift in Sources */,
 				039D6B0B2808C918002F174C /* Reminder.swift in Sources */,
 				03593DF12812575F0069A20B /* ReminderDoneButton.swift in Sources */,
