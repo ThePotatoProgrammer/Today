@@ -32,6 +32,14 @@ class ReminderListViewController: UICollectionViewController {
                                                                 item: itemIdentifier)
         }
         
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add,
+                                        target: self,
+                                        action: #selector(didPressAddButton(_:)))
+        
+        addButton.accessibilityLabel = NSLocalizedString("Add Reminder",
+                                                         comment: "Add button accessibility label")
+        navigationItem.rightBarButtonItem = addButton
+        
         updateSnapshot()
         
         collectionView.dataSource = dataSource
@@ -41,6 +49,7 @@ class ReminderListViewController: UICollectionViewController {
         var listConfiguration = UICollectionLayoutListConfiguration(appearance: .grouped)
         
         listConfiguration.showsSeparators = false
+        listConfiguration.trailingSwipeActionsConfigurationProvider = makeSwipeActions
         listConfiguration.backgroundColor = .clear
         
         return UICollectionViewCompositionalLayout.list(using: listConfiguration)
@@ -61,6 +70,24 @@ class ReminderListViewController: UICollectionViewController {
         let id = reminders[indexPath.item].id
         showDeatil(for: id)
         return false
+    }
+    
+    private func makeSwipeActions(for indexPath: IndexPath?) -> UISwipeActionsConfiguration? {
+        guard let indexPath = indexPath, let id = dataSource.itemIdentifier(for: indexPath) else {
+            return nil
+        }
+        
+        let deleteActionTitle = NSLocalizedString("Delete",
+                                                  comment: "Delete action title")
+        
+        let deleteAction = UIContextualAction(style: .destructive,
+                                              title: deleteActionTitle) { [weak self] _, _, completion in
+            self?.deleteReminder(with: id)
+            self?.updateSnapshot()
+            completion(false)
+        }
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }
 
