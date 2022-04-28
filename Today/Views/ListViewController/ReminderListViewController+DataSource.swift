@@ -99,6 +99,7 @@ extension ReminderListViewController {
         }
         
         dataSource.apply(snapshot)
+        headerView?.progress = progress
     }
     
     private func doneButtonAccessibilityAction(for reminder: Reminder) -> UIAccessibilityCustomAction {

@@ -33,7 +33,7 @@ extension Reminder {
                      notes: "Don't forget about taxi receipts"),
             
             Reminder(title: "Code review",
-                     dueDate: Date().addingTimeInterval(14000.0),
+                     dueDate: Date().addingTimeInterval(800.0),
                      notes: "Check tech specs in shared folder",
                      isComplete: true),
             

@@ -26,9 +26,27 @@ class ReminderListViewController: UICollectionViewController {
         ReminderListStyle.all.name
     ])
 
+    var headerView: ProgressHeaderView?
+    
+    // TODO: think about this some more.
+    var progress: CGFloat {
+        let chuckSize = 1.0 / CGFloat(filteredReminders.count)
+        
+        let progress = filteredReminders.reduce(0.0) {
+            let chuck = $1.isComplete
+                ? chuckSize
+                : 0
+            return $0 + chuck
+        }
+        
+        return progress
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        collectionView.backgroundColor = .systemTeal
         
         let listLayout = listLayout()
         
@@ -43,6 +61,14 @@ class ReminderListViewController: UICollectionViewController {
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistration,
                                                                 for: indexPath,
                                                                 item: itemIdentifier)
+        }
+        
+        let headerRegistration = UICollectionView.SupplementaryRegistration(elementKind: ProgressHeaderView.elemtentKind,
+                                                                            handler: supplementaryRegistrationHandler)
+        
+        dataSource.supplementaryViewProvider = { supplementaryView, elementKind, indexPath in
+            return self.collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration,
+                                                                              for: indexPath)
         }
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add,
@@ -68,6 +94,8 @@ class ReminderListViewController: UICollectionViewController {
     private func listLayout() -> UICollectionViewCompositionalLayout {
         var listConfiguration = UICollectionLayoutListConfiguration(appearance: .grouped)
         
+        listConfiguration.headerMode = .supplementary
+        
         listConfiguration.showsSeparators = false
         listConfiguration.trailingSwipeActionsConfigurationProvider = makeSwipeActions
         listConfiguration.backgroundColor = .clear
@@ -92,6 +120,17 @@ class ReminderListViewController: UICollectionViewController {
         return false
     }
     
+    override func collectionView(_ collectionView: UICollectionView,
+                                 willDisplaySupplementaryView view: UICollectionReusableView,
+                                 forElementKind elementKind: String,
+                                 at indexPath: IndexPath) {
+        guard elementKind == ProgressHeaderView.elemtentKind, let progressView = view as? ProgressHeaderView else {
+            return
+        }
+        
+        progressView.progress = progress
+    }
+    
     private func makeSwipeActions(for indexPath: IndexPath?) -> UISwipeActionsConfiguration? {
         guard let indexPath = indexPath, let id = dataSource.itemIdentifier(for: indexPath) else {
             return nil
@@ -108,6 +147,12 @@ class ReminderListViewController: UICollectionViewController {
         }
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+    
+    private func supplementaryRegistrationHandler(progressView: ProgressHeaderView,
+                                                  elementKind: String,
+                                                  indexPath: IndexPath) {
+        headerView = progressView
     }
 }
 
