@@ -53,6 +53,13 @@ class ReminderListViewController: UICollectionViewController {
                                                          comment: "Add button accessibility label")
         navigationItem.rightBarButtonItem = addButton
         
+        listStyleSegmentedControl.selectedSegmentIndex = listStyle.rawValue
+        listStyleSegmentedControl.addTarget(self,
+                                            action: #selector(didChangeListStyle(_:)),
+                                            for: .valueChanged)
+        
+        navigationItem.titleView = listStyleSegmentedControl
+        
         updateSnapshot()
         
         collectionView.dataSource = dataSource
