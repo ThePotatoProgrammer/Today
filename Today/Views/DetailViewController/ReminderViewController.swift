@@ -19,6 +19,7 @@ class ReminderViewController: UICollectionViewController {
     
     
     var workingReminder: Reminder
+    var isAddingNewReminder = false
     var onChange: (Reminder) -> Void
     private var dataSource: DataSource!
     
@@ -70,7 +71,11 @@ class ReminderViewController: UICollectionViewController {
         if editing {
             prepareForEditing()
         } else {
-            prepareForViewing()
+            if !isAddingNewReminder {
+                prepareForViewing()
+            } else {
+                onChange(workingReminder)
+            }
         }
     }
     
@@ -81,15 +86,20 @@ class ReminderViewController: UICollectionViewController {
         
         switch (section, row) {
             case (_, .header(let title)):
-                cell.contentConfiguration = headerConfiguratoin(for: cell, with: title)
+                cell.contentConfiguration = headerConfiguratoin(for: cell,
+                                                                with: title)
             case (.view, _):
-                cell.contentConfiguration = defaultConfiguration(for: cell, at: row)
+                cell.contentConfiguration = defaultConfiguration(for: cell,
+                                                                 at: row)
             case (.title, .editText(let title)):
-                cell.contentConfiguration = titleConfiguration(for: cell, with: title)
+                cell.contentConfiguration = titleConfiguration(for: cell,
+                                                               with: title)
             case (.date, .editDate(let date)):
-                cell.contentConfiguration = dateConfiguration(for: cell, with: date)
+                cell.contentConfiguration = dateConfiguration(for: cell,
+                                                              with: date)
             case (.notes, .editText(let notes)):
-                cell.contentConfiguration = notesConfiguration(for: cell, with: notes)
+                cell.contentConfiguration = notesConfiguration(for: cell,
+                                                               with: notes)
             default:
                 fatalError("Unexpected combination of section and row.")
         }
