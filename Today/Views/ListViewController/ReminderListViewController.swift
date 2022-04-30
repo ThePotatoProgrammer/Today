@@ -11,7 +11,7 @@ class ReminderListViewController: UICollectionViewController {
     
    
     var dataSource: Datasource!
-    var reminders: [Reminder] = Reminder.sampleData
+    var reminders: [Reminder] = []
     
     // TODO: try to understand this better.
     var filteredReminders: [Reminder] {
@@ -89,6 +89,8 @@ class ReminderListViewController: UICollectionViewController {
         updateSnapshot()
         
         collectionView.dataSource = dataSource
+        
+        prepareReminderStore()
     }
 
     private func listLayout() -> UICollectionViewCompositionalLayout {
@@ -139,6 +141,7 @@ class ReminderListViewController: UICollectionViewController {
         let deleteActionTitle = NSLocalizedString("Delete",
                                                   comment: "Delete action title")
         
+        // TODO: learn about the _, _, part
         let deleteAction = UIContextualAction(style: .destructive,
                                               title: deleteActionTitle) { [weak self] _, _, completion in
             self?.deleteReminder(with: id)
@@ -166,6 +169,28 @@ class ReminderListViewController: UICollectionViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         refreshBackground()
+    }
+    
+    func showError(_ error: Error) {
+        let alertTitle = NSLocalizedString("Error",
+                                           comment: "Error alert title")
+        
+        let alert = UIAlertController(title: alertTitle,
+                                      message: error.localizedDescription,
+                                      preferredStyle: .alert)
+        
+        let actionTitle = NSLocalizedString("OK",
+                                            comment: "Alert button OK title")
+        
+        alert.addAction(UIAlertAction(title: actionTitle,
+                                      style: .default,
+                                      handler: { [weak self] _ in
+            self?.dismiss(animated: true)
+        }))
+        
+        present(alert,
+                animated: true,
+                completion: nil)
     }
 }
 

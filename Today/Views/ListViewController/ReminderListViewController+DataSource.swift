@@ -19,6 +19,9 @@ extension ReminderListViewController {
         NSLocalizedString("Not completed", comment: "Reminder not completed value")
     }
     
+    // TODO: learn why/what is happening here.
+    private var reminderStore: ReminderStore { ReminderStore.shared }
+    
     func cellRegistrationHandler(cell: UICollectionViewListCell,
                                  indexPath: IndexPath,
                                  id: Reminder.ID) {
@@ -120,5 +123,22 @@ extension ReminderListViewController {
     func deleteReminder(with id: Reminder.ID) {
         let index = reminders.indexOfReminder(with: id)
         reminders.remove(at: index)
+    }
+    
+    func prepareReminderStore() {
+        Task {
+            do {
+                try await reminderStore.requestAccess()
+                reminders = try await reminderStore.readAll()
+            } catch TodayError.accessDenied, TodayError.accessRestricted {
+                #if DEBUG
+                reminders = Reminder.sampleData
+                #endif
+            } catch {
+                showError(error)
+            }
+            
+            updateSnapshot()
+        }
     }
 }
