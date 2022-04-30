@@ -78,8 +78,14 @@ extension ReminderListViewController {
     }
     
     func update(_ reminder: Reminder, with id: Reminder.ID) {
-        let index = reminders.indexOfReminder(with: id)
-        reminders[index] = reminder
+        do {
+            try reminderStore.save(reminder)
+            let index = reminders.indexOfReminder(with: id)
+            reminders[index] = reminder
+        } catch TodayError.accessDenied {
+        } catch {
+            showError(error)
+        }
     }
     
     func completeReminder(with id: Reminder.ID) {
@@ -117,12 +123,27 @@ extension ReminderListViewController {
     }
     
     func add(_ reminder: Reminder) {
-        reminders.append(reminder)
+        // This is called shadowing?
+        var reminder = reminder
+        do {
+            let idFromStore = try reminderStore.save(reminder)
+            reminder.id = idFromStore
+            reminders.append(reminder)
+        } catch TodayError.accessDenied {
+        } catch {
+            showError(error)
+        }
     }
     
     func deleteReminder(with id: Reminder.ID) {
-        let index = reminders.indexOfReminder(with: id)
-        reminders.remove(at: index)
+        do {
+            try reminderStore.remove(with: id)
+            let index = reminders.indexOfReminder(with: id)
+            reminders.remove(at: index)
+        } catch TodayError.accessDenied {
+        } catch {
+            showError(error)
+        }
     }
     
     func prepareReminderStore() {
@@ -130,6 +151,11 @@ extension ReminderListViewController {
             do {
                 try await reminderStore.requestAccess()
                 reminders = try await reminderStore.readAll()
+                NotificationCenter.default.addObserver(self,
+                                                       selector: #selector(eventStoreChanged(_:)),
+                                                       name: .EKEventStoreChanged,
+                                                       object: nil)
+                
             } catch TodayError.accessDenied, TodayError.accessRestricted {
                 #if DEBUG
                 reminders = Reminder.sampleData
@@ -140,5 +166,13 @@ extension ReminderListViewController {
             
             updateSnapshot()
         }
+    }
+    
+    func reminderStoreChanged() {
+        Task {
+            reminders = try await reminderStore.readAll()
+            updateSnapshot()
+        }
+        
     }
 }
